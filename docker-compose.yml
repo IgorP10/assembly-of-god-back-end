@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0.0
+    env_file:
+      - ./.env
+    environment:
+      MYSQL_ROOT_PASSWORD: "${DB_WRITE_PASSWORD}"
+      MYSQL_DATABASE: "${DB_WRITE_DATABASE}"
+      MYSQL_USER: "${DB_WRITE_USER}"
+      MYSQL_PASSWORD: "${DB_WRITE_PASSWORD}"
+    volumes:
+      - database:/var/lib/mysql
+      - ./Migration/Initialization/structure.sql:/docker-entrypoint-initdb.d/structure.sql
+    ports:
+      - "3306:3306"
+    networks:
+      - NetworkDeliveryBackend
+
+  app:
+    build: ./Config/Docker/Build
+    working_dir: /application
+    volumes:
+      - '.:/application'
+      - "./Config/Docker/Build/php-overrides.ini:/usr/local/etc/php/conf.d/php-overrides.ini"
+      - "./Config/Docker/Build/openssl.cnf.override:/etc/ssl/openssl.cnf"
+    links:
+      - mysql
+    depends_on:
+      - mysql
+    env_file:
+      - .env
+    environment:
+      PHP_IDE_CONFIG: "serverName=test.tech-challenge.com.br"
+    networks:
+      - NetworkDeliveryBackend
+
+volumes:
+  database:
+  esdata:
+    driver: local
+
+networks:
+  NetworkDeliveryBackend:
+    driver: bridge
+    name: NetworkDeliveryBackend
