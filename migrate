@@ -16,10 +16,10 @@ $connection = $connectionGroup->getConnection();
 
 $config = new PhpFile('migrations.php');
 
-$kernel = new \Kernel\Kernel();
-$configurationKernel = new \Kernel\Configuration\Configuration();
+//$kernel = new \Kernel\Kernel();
+//$configurationKernel = new \Kernel\Configuration\Configuration();
 
-$kernel->run($configurationKernel, false);
+//$kernel->run($configurationKernel, false);
 
 $dependencyFactory = DependencyFactory::fromConnection($config, new ExistingConnection($connection));
 

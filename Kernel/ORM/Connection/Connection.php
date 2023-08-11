@@ -14,6 +14,8 @@ abstract class Connection
 
     protected static Configuration|null $CONFIGURATION = null;
 
+    use Timezone;
+
 
     public function getName() : string
     {
