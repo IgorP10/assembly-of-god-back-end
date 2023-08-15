@@ -40,15 +40,15 @@ class Kernel
 
     }
 
-    private function mountGlobals(Configuration $configuration) : void
-    {
-        include str_replace(['/Public', '\Public'], ['', ''], getcwd()) . '/Config/Global.php';
-    }
-
-    private function mountRoutes() : RouteOrchestrator
-    {
-        return new RouteOrchestrator();
-    }
+//    private function mountGlobals(Configuration $configuration) : void
+//    {
+//        include str_replace(['/Public', '\Public'], ['', ''], getcwd()) . '/Config/Global.php';
+//    }
+//
+//    private function mountRoutes() : RouteOrchestrator
+//    {
+//        return new RouteOrchestrator();
+//    }
 
     private function setKernelConfiguration(Configuration $configuration) : void
     {
@@ -75,10 +75,10 @@ class Kernel
         ini_set('display_startup_erros', $debug);
     }
 
-    private function mountServiceContainers(Configuration $configuration) : void
-    {
-        $containers = (new DependecyInjectionManager())->generateContainer();
-        ServiceContainer::set($containers);
-        ServiceContainer::setConfiguration($configuration);
-    }
+//    private function mountServiceContainers(Configuration $configuration) : void
+//    {
+//        $containers = (new DependecyInjectionManager())->generateContainer();
+//        ServiceContainer::set($containers);
+//        ServiceContainer::setConfiguration($configuration);
+//    }
 }
