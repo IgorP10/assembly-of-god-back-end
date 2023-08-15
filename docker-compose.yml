@@ -18,6 +18,20 @@ services:
     networks:
       - NetworkDeliveryBackend
 
+  nginx:
+    image: "nginx:1.25.1"
+    restart: always
+    links:
+      - app
+    working_dir: /application
+    volumes:
+      - '.:/application'
+      - "./Config/Docker/Build/default.conf:/etc/nginx/conf.d/default.conf"
+    ports:
+      - "80:80"
+    networks:
+      - NetworkDeliveryBackend
+
   app:
     build: ./Config/Docker/Build
     working_dir: /application

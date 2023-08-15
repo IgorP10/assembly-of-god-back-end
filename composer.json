@@ -2,6 +2,7 @@
     "name": "igorf/tech-challenge",
     "autoload": {
         "psr-4": {
+            "App\\": "App/",
             "Config\\": "Config/",
             "Kernel\\": "Kernel/"
         }
@@ -9,6 +10,7 @@
     "require": {
         "doctrine/dbal": "^3.6",
         "doctrine/migrations": "^3.6",
-        "vlucas/phpdotenv": "^5.5"
+        "vlucas/phpdotenv": "^5.5",
+        "slim/slim": "^4.12"
     }
 }
