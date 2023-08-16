@@ -2,6 +2,7 @@
 
 namespace Kernel\Route;
 
+use App\Customer\Controller\CustomerController;
 use Slim\App;
 
 class RouteOrchestrator
@@ -13,8 +14,8 @@ class RouteOrchestrator
         $this->app = $app;
     }
 
-    public function setUpRoutes()
+    public function setUpRoutes(): void
     {
-
+         $this->app->get('/rota', [CustomerController::class, 'saveCustomerAction']);
     }
 }

@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace Kernel;
 
 use Kernel\Configuration\Configuration;
-use Kernel\DependencyInjection\DependecyInjectionManager;
-use Kernel\DependencyInjection\ServiceContainer;
-use Kernel\Error\Handler\ErrorHandler;
+//use Kernel\DependencyInjection\DependecyInjectionManager;
+//use Kernel\DependencyInjection\ServiceContainer;
+//use Kernel\Error\Handler\ErrorHandler;
 use Kernel\Route\RouteOrchestrator;
+use Slim\Factory\AppFactory;
+use Nyholm\Psr7\Factory\Psr17Factory;
 
 /**
  * Application Kernel bootstrap class
@@ -21,19 +23,23 @@ class Kernel
     {
         try {
             $this->setKernelConfiguration($configuration);
-            $this->mountGlobals($configuration);
-            $this->mountServiceContainers($configuration);
+            $psr17Factory = new Psr17Factory();
+            $app = AppFactory::create($psr17Factory);
+            $routeOrchestrator = new RouteOrchestrator($app);
+            $routeOrchestrator->setupRoutes();
+//            $this->mountGlobals($configuration);
+//            $this->mountServiceContainers($configuration);
 
-            if ($mountRoutes === true) {
-                if (empty(self::$ROUTES)) {
-                    self::$ROUTES = $this->mountRoutes();
-                }
-
-                self::$ROUTES->generate($configuration);
-            }
+//            if ($mountRoutes === true) {
+//                if (empty(self::$ROUTES)) {
+//                    self::$ROUTES = $this->mountRoutes();
+//                }
+//
+//                self::$ROUTES->generate($configuration);
+//            }
         } catch (\Throwable $exception) {
-            ErrorHandler::getInstance($configuration)
-                ->notifyException($exception);
+//            ErrorHandler::getInstance($configuration)
+//                ->notifyException($exception);
 
             throw $exception;
         }
@@ -62,17 +68,17 @@ class Kernel
         set_time_limit(300);
         #Error handle
         error_reporting(E_ALL);
-        $debug = '0';
+//        $debug = '0';
 
-        $modeDebug = (bool)$configuration->get('APP_DEBUG');
-
-        if ($modeDebug === true) {
-            $debug = '1';
-        }
-
-        ini_set('log_errors', $debug);
-        ini_set('display_errors', $debug);
-        ini_set('display_startup_erros', $debug);
+//        $modeDebug = (bool)$configuration->get('APP_DEBUG');
+//
+//        if ($modeDebug === true) {
+//            $debug = '1';
+//        }
+//
+//        ini_set('log_errors', $debug);
+//        ini_set('display_errors', $debug);
+//        ini_set('display_startup_erros', $debug);
     }
 
 //    private function mountServiceContainers(Configuration $configuration) : void
