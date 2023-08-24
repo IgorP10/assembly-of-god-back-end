@@ -5,12 +5,7 @@ declare(strict_types=1);
 namespace Kernel;
 
 use Kernel\Configuration\Configuration;
-//use Kernel\DependencyInjection\DependecyInjectionManager;
-//use Kernel\DependencyInjection\ServiceContainer;
-//use Kernel\Error\Handler\ErrorHandler;
 use Kernel\Route\RouteOrchestrator;
-use Slim\Factory\AppFactory;
-use Nyholm\Psr7\Factory\Psr17Factory;
 
 /**
  * Application Kernel bootstrap class
@@ -23,38 +18,24 @@ class Kernel
     {
         try {
             $this->setKernelConfiguration($configuration);
-            $psr17Factory = new Psr17Factory();
-            $app = AppFactory::create($psr17Factory);
-            $routeOrchestrator = new RouteOrchestrator($app);
-            $routeOrchestrator->setupRoutes();
-//            $this->mountGlobals($configuration);
-//            $this->mountServiceContainers($configuration);
 
-//            if ($mountRoutes === true) {
-//                if (empty(self::$ROUTES)) {
-//                    self::$ROUTES = $this->mountRoutes();
-//                }
-//
-//                self::$ROUTES->generate($configuration);
-//            }
+            if ($mountRoutes === true) {
+                if (empty(self::$ROUTES)) {
+                    self::$ROUTES = $this->mountRoutes();
+                }
+
+                self::$ROUTES->setUpRoutes($configuration);
+            }
         } catch (\Throwable $exception) {
-//            ErrorHandler::getInstance($configuration)
-//                ->notifyException($exception);
-
             throw $exception;
         }
 
     }
 
-//    private function mountGlobals(Configuration $configuration) : void
-//    {
-//        include str_replace(['/Public', '\Public'], ['', ''], getcwd()) . '/Config/Global.php';
-//    }
-//
-//    private function mountRoutes() : RouteOrchestrator
-//    {
-//        return new RouteOrchestrator();
-//    }
+    private function mountRoutes() : RouteOrchestrator
+    {
+        return new RouteOrchestrator();
+    }
 
     private function setKernelConfiguration(Configuration $configuration) : void
     {
@@ -80,11 +61,4 @@ class Kernel
 //        ini_set('display_errors', $debug);
 //        ini_set('display_startup_erros', $debug);
     }
-
-//    private function mountServiceContainers(Configuration $configuration) : void
-//    {
-//        $containers = (new DependecyInjectionManager())->generateContainer();
-//        ServiceContainer::set($containers);
-//        ServiceContainer::setConfiguration($configuration);
-//    }
 }
