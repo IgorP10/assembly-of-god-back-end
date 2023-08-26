@@ -46,6 +46,7 @@ class RouteOrchestrator
                 $this->app->{$method}($route['pattern'], function (
                     Request $request,
                     Response $response,
+                    array $args
                 ) use ($route) : Response {
                     $controller = new $route['controller']();
                     $response = $controller->{$route['actionResult']}($request, $response);
@@ -59,6 +60,13 @@ class RouteOrchestrator
     {
         //Add Routing Middleware
         $this->app->addRoutingMiddleware();
+
+        //Add Error Handling Middleware
+        $this->app->addErrorMiddleware(
+            $configuration->get('APP_DEBUG') === 'true',
+            $configuration->get('APP_LOG_ENABLED') === 'true',
+            $configuration->get('APP_LOG_ENABLED') === 'true'
+        );
 
         $this->app->run();
     }
