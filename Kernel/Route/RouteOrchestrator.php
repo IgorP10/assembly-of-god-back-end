@@ -27,7 +27,7 @@ class RouteOrchestrator
         $routes = [
             [
                 'name' => 'customer',
-                'method' => ['GET'],
+                'method' => ['POST'],
                 'pattern' => '/customer',
                 'controller' => CustomerController::class,
                 'actionResult' => 'saveCustomerAction'
@@ -49,7 +49,7 @@ class RouteOrchestrator
                     array $args
                 ) use ($route) : Response {
                     $controller = new $route['controller']();
-                    $response = $controller->{$route['actionResult']}($request, $response);
+                    $response = $controller->{$route['actionResult']}($request, $response, $args);
                     return $response;
                 });
             }
