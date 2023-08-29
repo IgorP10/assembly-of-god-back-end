@@ -18,7 +18,7 @@ class CustomerApplication
 
     public function saveCustomer(InputSaveCustomer $inputSaveCustomer)
     {
-        $this->customerService->saveCustomer(
+        return $this->customerService->saveCustomer(
             $inputSaveCustomer->getCpf(),
             $inputSaveCustomer->getName(),
             $inputSaveCustomer->getEmail(),

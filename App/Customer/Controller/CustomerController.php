@@ -7,6 +7,8 @@ namespace App\Customer\Controller;
 use App\Customer\Application\CustomerApplication;
 use App\Customer\Application\Input\InputSaveCustomer;
 use App\Customer\Domain\Service\CustomerService;
+use App\Customer\Infrastructure\Entity\CustomerEntity;
+use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
@@ -32,14 +34,15 @@ class CustomerController
             )
         );
 
-        $response->getBody()->write('Response from saveCustomerAction');
-        return $response->withStatus(200);
+        return new JsonResponse($output, 200, [],JsonResponse::DEFAULT_JSON_FLAGS);
     }
 
     public function getCustomerApplication(): CustomerApplication
     {
         return new CustomerApplication(
-            new CustomerService()
+            new CustomerService(
+                new CustomerEntity()
+            )
         );
     }
 }
