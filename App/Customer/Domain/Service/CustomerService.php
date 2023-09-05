@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace App\Customer\Domain\Service;
 
+use App\Customer\Domain\Entity\Customer;
 use App\Customer\Domain\Entity\CustomerEntityInterface;
-use Kernel\ORM\Connection\ConnectionGroup;
-use Kernel\ORM\Entities\Entity;
 
 class CustomerService
 {
@@ -16,20 +15,8 @@ class CustomerService
         $this->customerEntity = $customerEntity;
     }
 
-    public function saveCustomer(
-        ?string $cpf,
-        ?string $name,
-        ?string $email,
-        ?string $birthdate,
-        ?string $gender
-    ) {
-        return $this->customerEntity->save(
-            $cpf,
-            $name,
-            $email,
-            $birthdate,
-            $gender
-        );
-
+    public function saveCustomer(Customer $customer): Customer
+    {
+        return $this->customerEntity->save($customer);
     }
 }

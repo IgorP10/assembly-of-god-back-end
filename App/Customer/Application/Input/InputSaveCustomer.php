@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace App\Customer\Application\Input;
 
+use App\Customer\Domain\Entity\Customer;
+use App\Customer\Domain\Entity\CustomerId;
+
 class InputSaveCustomer
 {
+    private int|null $customerId;
     private string|null $cpf;
     private string|null $name;
     private string|null $email;
@@ -13,12 +17,14 @@ class InputSaveCustomer
     private string|null $gender;
 
     public function __construct(
+        ?int $customerId,
         ?string $cpf,
         ?string $name,
         ?string $email,
         ?string $birthdate,
         ?string $gender
     ) {
+        $this->customerId = $customerId;
         $this->cpf = $cpf;
         $this->name = $name;
         $this->email = $email;
@@ -26,30 +32,20 @@ class InputSaveCustomer
         $this->gender = $gender;
     }
 
-    public function getCpf(): ?string
+    public function getCustomer(): Customer
     {
-        return $this->cpf;
+        return new Customer(
+            $this->getCustomerId(),
+            $this->cpf,
+            $this->name,
+            $this->email,
+            $this->birthdate,
+            $this->gender
+        );
     }
 
-    public function getName(): ?string
+    public function getCustomerId(): CustomerId
     {
-        return $this->name;
+        return new CustomerId($this->customerId);
     }
-
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
-
-    public function getBirthdate(): ?string
-    {
-        return $this->birthdate;
-    }
-
-    public function getGender(): ?string
-    {
-        return $this->gender;
-    }
-
-
 }

@@ -18,6 +18,7 @@ class CustomerController
     {
         $body = json_decode($request->getBody()->getContents(), true);
 
+        $customerId = $body['customerId'] ?? null;
         $cpf = $body['cpf'] ?? null;
         $name = $body['name'] ?? null;
         $email = $body['email'] ?? null;
@@ -26,6 +27,7 @@ class CustomerController
 
         $output = $this->getCustomerApplication()->saveCustomer(
             new InputSaveCustomer(
+                $customerId,
                 $cpf,
                 $name,
                 $email,
@@ -34,7 +36,7 @@ class CustomerController
             )
         );
 
-        return new JsonResponse($output, 200, [],JsonResponse::DEFAULT_JSON_FLAGS);
+        return new JsonResponse($output->getOutput(), 200, [],JsonResponse::DEFAULT_JSON_FLAGS);
     }
 
     public function getCustomerApplication(): CustomerApplication

@@ -1,14 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Customer\Domain\Entity;
 
 interface CustomerEntityInterface
 {
-    public function save(
-        ?string $cpf,
-        ?string $name,
-        ?string $email,
-        ?string $birthdate,
-        ?string $gender
-    );
+    public function save(Customer $customer): Customer;
 }
