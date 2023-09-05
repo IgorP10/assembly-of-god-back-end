@@ -16,7 +16,6 @@ abstract class Connection
 
     use Timezone;
 
-
     public function getName() : string
     {
         return get_class($this);
@@ -42,7 +41,7 @@ abstract class Connection
         return self::$CONFIGURATION;
     }
 
-    public function getConnection() : \Doctrine\DBAL\Connection
+    public function getConnection(): \Doctrine\DBAL\Connection
     {
         $configuration = $this->getGetPdoConfigurationConnection();
 
