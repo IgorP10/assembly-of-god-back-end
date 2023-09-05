@@ -16,8 +16,6 @@ class CustomerController
 {
     public function saveCustomerAction(Request $request, Response $response, array $args): Response
     {
-        print_r($request->getBody()->getContents());
-        die();
         $body = json_decode($request->getBody()->getContents(), true);
 
         $cpf = $body['cpf'] ?? null;

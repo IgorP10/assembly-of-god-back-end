@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Kernel\Route;
 
-use App\Customer\Controller\CustomerController;
 use Kernel\Configuration\Configuration;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -14,54 +15,47 @@ class RouteOrchestrator
 {
     private App $app;
 
+    /** @var Route[] */
+    private array $routes;
+
     public function __construct()
     {
         AppFactory::setSlimHttpDecoratorsAutomaticDetection(false);
         ServerRequestCreatorFactory::setSlimHttpDecoratorsAutomaticDetection(false);
 
         $this->app = AppFactory::create();
+        $this->routes = (new RouteRegistry())->getRoutes();
     }
 
     public function setUpRoutes(Configuration $configuration): void
     {
-//        $routes = [
-//            [
-//                'name' => 'customer',
-//                'method' => ['POST'],
-//                'pattern' => '/customer',
-//                'controller' => CustomerController::class,
-//                'actionResult' => 'saveCustomerAction'
-//            ]
-//        ];
-//
-//        $this->createRoutesFromRouteRegistry($routes);
-
-        $routes = RouteRegistry::getRoutes();
+        $routes = [];
 
         /** @var Route $route */
-        foreach ($routes as $route) {
+        foreach ($this->routes as $route) {
             $routeInstance = new $route();
-            $routeInstance->register($this->app);
+            $routes = array_merge($routes, RouteYmlConvert::convertToRouteAttributesCollection($routeInstance->register()));
         }
+
+        $this->createRoutesFromRouteRegistry($routes);
 
         $this->run($configuration);
     }
 
     private function createRoutesFromRouteRegistry(array $routes): void
     {
-//        foreach ($routes as $route) {
-//            foreach ($route['method'] as $method) {
-//                $this->app->{$method}($route['pattern'], function (
-//                    Request $request,
-//                    Response $response,
-//                    array $args
-//                ) use ($route) : Response {
-//                    $controller = new $route['controller']();
-//                    $response = $controller->{$route['actionResult']}($request, $response, $args);
-//                    return $response;
-//                });
-//            }
-//        }
+        foreach ($routes as $route) {
+            foreach ($route['method'] as $method) {
+                $this->app->{$method}($route['pattern'], function (
+                    Request $request,
+                    Response $response,
+                    array $args
+                ) use ($route) : Response {
+                    $controller = new $route['controller']();
+                    return $controller->{$route['actionResult']}($request, $response, $args);
+                });
+            }
+        }
     }
 
     private function run(Configuration $configuration): void

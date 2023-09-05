@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Kernel\Route;
 
-use App\Customer\Route\CustomerRoutes;
+use App\Customer\Route\CustomerRoute;
 
 class RouteRegistry
 {
     public static function getRoutes(): array
     {
         return [
-            CustomerRoutes::class
+            CustomerRoute::class
         ];
     }
 }

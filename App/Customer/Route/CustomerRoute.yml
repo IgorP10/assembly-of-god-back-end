@@ -1,0 +1,7 @@
+routes:
+  -
+    name: saveCustomer
+    method: ["post"]
+    pattern: "/api/customer"
+    controller: App\Customer\Controller\CustomerController
+    actionResult: saveCustomerAction
