@@ -10,8 +10,9 @@ use App\Customer\Domain\Entity\CustomerId;
 use Kernel\ORM\Connection\ConnectionGroup;
 use Kernel\ORM\Connection\Group\DeliveryWriteConnectionGroup;
 use Kernel\ORM\Entities\Entity;
+use Kernel\ORM\Entities\EntityOrchestrator;
 
-class CustomerEntity implements Entity, CustomerEntityInterface
+class CustomerEntity extends EntityOrchestrator implements Entity, CustomerEntityInterface
 {
     public function getTableName(): string
     {
@@ -30,25 +31,23 @@ class CustomerEntity implements Entity, CustomerEntityInterface
 
     public function save(Customer $customer): Customer
     {
+        $entity = new self();
+
         $birthdate = new \DateTime($customer->getBirthdate());
 
-        $fieldsCollection = [
-            'cpf' => $customer->getCpf(),
-            'name' => $customer->getName(),
-            'email' => $customer->getEmail(),
-            'birthdate' => $birthdate->format("Y-m-d"),
-            'gender' => strtoupper($customer->getGender()),
-            'status' => 1,
-            'created_at' => (new \DateTime())->format("Y-m-d H:i:s"),
-            'updated_at' => (new \DateTime())->format("Y-m-d H:i:s"),
-        ];
+        $entity->setFieldCollection('cpf', $customer->getCpf());
+        $entity->setFieldCollection('name', $customer->getName());
+        $entity->setFieldCollection('email', $customer->getEmail());
+        $entity->setFieldCollection('birthdate', $birthdate->format("Y-m-d"));
+        $entity->setFieldCollection('gender',  strtoupper($customer->getGender()));
+        $entity->setFieldCollection('status', 1);
+        $entity->setFieldCollection('created_at', (new \DateTime())->format("Y-m-d H:i:s"));
+        $entity->setFieldCollection('updated_at', (new \DateTime())->format("Y-m-d H:i:s"));
 
-        $this->getConnectionGroup()->getConnection()->insert($this->getTableName(), $fieldsCollection);
-
-        $id = $this->getConnectionGroup()->getConnection()->lastInsertId();
+        $id = $entity->insert();
 
         return new Customer(
-            new CustomerId((int)$id),
+            new CustomerId($id),
             $customer->getCpf(),
             $customer->getName(),
             $customer->getEmail(),
