@@ -32,7 +32,7 @@ class Kernel
 
     }
 
-    private function mountRoutes() : RouteOrchestrator
+    private function mountRoutes(): RouteOrchestrator
     {
         return new RouteOrchestrator();
     }
