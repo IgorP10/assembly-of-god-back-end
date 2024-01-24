@@ -16,10 +16,10 @@ services:
     ports:
       - "3306:3306"
     networks:
-      - NetworkDeliveryBackend
+      - NetworkChurchBackend
 
   nginx:
-    image: "nginx:1.25.1"
+    image: "nginx:1.25.3"
     restart: always
     links:
       - app
@@ -30,7 +30,7 @@ services:
     ports:
       - "80:80"
     networks:
-      - NetworkDeliveryBackend
+      - NetworkChurchBackend
 
   app:
     build: ./Config/Docker/Build
@@ -46,9 +46,9 @@ services:
     env_file:
       - .env
     environment:
-      PHP_IDE_CONFIG: "serverName=test.tech-challenge.com.br"
+      PHP_IDE_CONFIG: "serverName=test.church.com.br"
     networks:
-      - NetworkDeliveryBackend
+      - NetworkChurchBackend
 
 volumes:
   database:
@@ -56,6 +56,6 @@ volumes:
     driver: local
 
 networks:
-  NetworkDeliveryBackend:
+  NetworkChurchBackend:
     driver: bridge
-    name: NetworkDeliveryBackend
+    name: NetworkChurchBackend
