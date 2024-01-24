@@ -6,7 +6,7 @@ namespace Kernel\ORM\Connection;
 
 use Kernel\Configuration\Configuration;
 use Kernel\Configuration\PdoConfigurationConnection;
-use Kernel\ORM\Connection\Group\DeliveryTestConnectionGroup;
+use Kernel\ORM\Connection\Group\ChurchTestConnectionGroup;
 
 abstract class Connection
 {
@@ -25,7 +25,7 @@ abstract class Connection
     {
         if (strtolower($this->getConfiguration()->get('APP_MODE')) === 'test') {
             return (
-            new DeliveryTestConnectionGroup()
+            new ChurchTestConnectionGroup()
             )->getPdoConfigurationConnection($this->getConfiguration());
         }
 

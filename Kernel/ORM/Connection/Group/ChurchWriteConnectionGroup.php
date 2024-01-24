@@ -9,7 +9,7 @@ use Kernel\Configuration\PdoConfigurationConnection;
 use Kernel\ORM\Connection\Connection;
 use Kernel\ORM\Connection\ConnectionGroup;
 
-class DeliveryWriteConnectionGroup extends Connection implements ConnectionGroup
+class ChurchWriteConnectionGroup extends Connection implements ConnectionGroup
 {
     public function getPdoConfigurationConnection(Configuration $configuration): PdoConfigurationConnection
     {
@@ -27,4 +27,9 @@ class DeliveryWriteConnectionGroup extends Connection implements ConnectionGroup
             $database
         );
     }
+
+//    public function getTimezone(): string
+//    {
+//        return '-03:00';
+//    }
 }

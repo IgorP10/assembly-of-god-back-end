@@ -8,7 +8,7 @@ use App\Customer\Domain\Entity\Customer;
 use App\Customer\Domain\Entity\CustomerEntityInterface;
 use App\Customer\Domain\Entity\CustomerId;
 use Kernel\ORM\Connection\ConnectionGroup;
-use Kernel\ORM\Connection\Group\DeliveryWriteConnectionGroup;
+use Kernel\ORM\Connection\Group\ChurchWriteConnectionGroup;
 use Kernel\ORM\Entities\Entity;
 use Kernel\ORM\Entities\EntityOrchestrator;
 
@@ -26,7 +26,7 @@ class CustomerEntity extends EntityOrchestrator implements Entity, CustomerEntit
 
     public function getConnectionGroup(): ConnectionGroup
     {
-        return new DeliveryWriteConnectionGroup();
+        return new ChurchWriteConnectionGroup();
     }
 
     public function save(Customer $customer): Customer

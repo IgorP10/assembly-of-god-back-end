@@ -8,7 +8,7 @@ use Kernel\Route\Route;
 
 class CustomerRoute implements Route
 {
-    public function register(): string
+    public function getPathRoute(): string
     {
         return __DIR__ .'/CustomerRoute.yml';
     }

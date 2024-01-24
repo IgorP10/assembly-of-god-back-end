@@ -6,7 +6,7 @@ namespace Kernel\Route;
 
 use App\Customer\Route\CustomerRoute;
 
-class RouteRegistry
+abstract class RouteRegistry
 {
     public static function getRoutes(): array
     {

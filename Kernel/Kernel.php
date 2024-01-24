@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Kernel;
 
 use Kernel\Configuration\Configuration;
+use Kernel\DependencyInjection\ContainerBuilderManager;
 use Kernel\Route\RouteOrchestrator;
 
 /**
@@ -18,6 +19,7 @@ class Kernel
     {
         try {
             $this->setKernelConfiguration($configuration);
+            $this->mountServiceContainers();
 
             if ($mountRoutes === true) {
                 if (empty(self::$ROUTES)) {
@@ -35,6 +37,11 @@ class Kernel
     private function mountRoutes(): RouteOrchestrator
     {
         return new RouteOrchestrator();
+    }
+
+    private function mountServiceContainers(): void
+    {
+        $containers = (new ContainerBuilderManager())->loadContainerConfiguration();
     }
 
     private function setKernelConfiguration(Configuration $configuration) : void

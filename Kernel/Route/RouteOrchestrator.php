@@ -15,16 +15,12 @@ class RouteOrchestrator
 {
     private App $app;
 
-    /** @var Route[] */
-    private array $routes;
-
     public function __construct()
     {
         AppFactory::setSlimHttpDecoratorsAutomaticDetection(false);
         ServerRequestCreatorFactory::setSlimHttpDecoratorsAutomaticDetection(false);
 
         $this->app = AppFactory::create();
-        $this->routes = (new RouteRegistry())->getRoutes();
     }
 
     public function setUpRoutes(Configuration $configuration): void
@@ -32,9 +28,9 @@ class RouteOrchestrator
         $routes = [];
 
         /** @var Route $route */
-        foreach ($this->routes as $route) {
+        foreach (RouteRegistry::getRoutes() as $route) {
             $routeInstance = new $route();
-            $routes = array_merge($routes, RouteYmlConvert::convertToRouteAttributesCollection($routeInstance->register()));
+            $routes = array_merge($routes, RouteYmlConvert::convertToRouteAttributesCollection($routeInstance->getPathRoute()));
         }
 
         $this->createRoutesFromRouteRegistry($routes);
