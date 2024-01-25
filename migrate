@@ -7,10 +7,10 @@ use Doctrine\Migrations\DependencyFactory;
 use Doctrine\Migrations\Configuration\Migration\PhpFile;
 use Doctrine\Migrations\Configuration\Connection\ExistingConnection;
 use Doctrine\Migrations\Tools\Console\Command;
-use Kernel\ORM\Connection\Group\ChurchWriteConnectionGroup;
+use Kernel\ORM\Connection\Group\AssemblyOfGodWriteConnectionGroup;
 use Symfony\Component\Console\Application;
 
-$connectionGroup = new ChurchWriteConnectionGroup();
+$connectionGroup = new AssemblyOfGodWriteConnectionGroup();
 
 $connection = $connectionGroup->getConnection();
 

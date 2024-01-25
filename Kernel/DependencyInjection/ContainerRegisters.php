@@ -11,7 +11,8 @@ abstract class ContainerRegisters
     public static function getContainers(): array
     {
         return [
-            RegisterKernel::class
+            RegisterKernel::class,
+            \App\Customer\Container\Register::class,
         ];
     }
 }

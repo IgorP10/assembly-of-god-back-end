@@ -9,7 +9,7 @@ use Kernel\Configuration\PdoConfigurationConnection;
 use Kernel\ORM\Connection\Connection;
 use Kernel\ORM\Connection\ConnectionGroup;
 
-class ChurchTestConnectionGroup extends Connection implements ConnectionGroup
+class AssemblyOfGodTestConnectionGroup extends Connection implements ConnectionGroup
 {
     public function getPdoConfigurationConnection(Configuration $configuration): PdoConfigurationConnection
     {

@@ -16,7 +16,7 @@ services:
     ports:
       - "3306:3306"
     networks:
-      - NetworkChurchBackend
+      - NetworkAssemblyOfGodBackend
 
   nginx:
     image: "nginx:1.25.3"
@@ -30,7 +30,7 @@ services:
     ports:
       - "80:80"
     networks:
-      - NetworkChurchBackend
+      - NetworkAssemblyOfGodBackend
 
   app:
     build: ./Config/Docker/Build
@@ -48,7 +48,7 @@ services:
     environment:
       PHP_IDE_CONFIG: "serverName=test.church.com.br"
     networks:
-      - NetworkChurchBackend
+      - NetworkAssemblyOfGodBackend
 
 volumes:
   database:
@@ -56,6 +56,6 @@ volumes:
     driver: local
 
 networks:
-  NetworkChurchBackend:
+  NetworkAssemblyOfGodBackend:
     driver: bridge
-    name: NetworkChurchBackend
+    name: NetworkAssemblyOfGodBackend

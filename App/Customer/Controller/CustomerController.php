@@ -6,14 +6,19 @@ namespace App\Customer\Controller;
 
 use App\Customer\Application\CustomerApplication;
 use App\Customer\Application\Input\InputSaveCustomer;
-use App\Customer\Domain\Service\CustomerService;
-use App\Customer\Infrastructure\Entity\CustomerEntity;
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 class CustomerController
 {
+    private CustomerApplication $customerApplication;
+
+    public function __construct(CustomerApplication $customerApplication)
+    {
+        $this->customerApplication = $customerApplication;
+    }
+
     public function saveCustomerAction(Request $request, Response $response, array $args): Response
     {
         $body = json_decode($request->getBody()->getContents(), true);
@@ -25,7 +30,7 @@ class CustomerController
         $birthdate = $body['birthdate'] ?? null;
         $gender = $body['gender'] ?? null;
 
-        $output = $this->getCustomerApplication()->saveCustomer(
+        $output = $this->customerApplication->saveCustomer(
             new InputSaveCustomer(
                 $customerId,
                 $cpf,
@@ -37,14 +42,5 @@ class CustomerController
         );
 
         return new JsonResponse($output->getOutput(), 200, [],JsonResponse::DEFAULT_JSON_FLAGS);
-    }
-
-    public function getCustomerApplication(): CustomerApplication
-    {
-        return new CustomerApplication(
-            new CustomerService(
-                new CustomerEntity()
-            )
-        );
     }
 }
