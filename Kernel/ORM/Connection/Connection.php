@@ -55,9 +55,12 @@ abstract class Connection
                 'driver' => 'pdo_mysql',
                 'driverOptions' => [
                     \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
-                    \PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8; SET time_zone = '" . $this->getTimezone() . "';"
+                    \PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8; SET time_zone = :timezone"
                 ],
             ]);
+
+            // Bind the timezone parameter
+            self::$CONNECTION_ORM[$this->getName()]->executeQuery("SET time_zone = :timezone", ['timezone' => $this->getTimezone()]);
         }
 
         return self::$CONNECTION_ORM[$this->getName()];
