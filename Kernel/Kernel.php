@@ -6,6 +6,7 @@ namespace Kernel;
 
 use Kernel\Configuration\Configuration;
 use Kernel\DependencyInjection\ContainerBuilderManager;
+use Kernel\DependencyInjection\ContainerService;
 use Kernel\Route\RouteOrchestrator;
 
 /**
@@ -42,6 +43,7 @@ class Kernel
     private function mountServiceContainers(): void
     {
         $containers = (new ContainerBuilderManager())->loadContainerConfiguration();
+        ContainerService::setContainer($containers);
     }
 
     private function setKernelConfiguration(Configuration $configuration) : void

@@ -4,7 +4,7 @@ namespace Kernel\ORM\Connection;
 
 trait Timezone
 {
-    protected function getTimezone() : string
+    protected function getTimezone(): string
     {
         $brasiliaTimezone = new \DateTimeZone('America/Sao_Paulo');
         $now = new \DateTime('now', $brasiliaTimezone);

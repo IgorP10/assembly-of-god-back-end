@@ -1,10 +1,4 @@
 services:
-  context.customer.controller.customerController:
-    class: App\Customer\Controller\CustomerController
-    arguments: [
-      "@context.customer.application.customerApplication"
-    ]
-
   context.customer.application.customerApplication:
     class: App\Customer\Application\CustomerApplication
     arguments: [
@@ -13,3 +7,9 @@ services:
 
   context.customer.domain.service.customerService:
     class: App\Customer\Domain\Service\CustomerService
+    arguments: [
+      "@context.customer.infrastructure.entity.customerEntity"
+    ]
+
+  context.customer.infrastructure.entity.customerEntity:
+    class: App\Customer\Infrastructure\Entity\CustomerEntity

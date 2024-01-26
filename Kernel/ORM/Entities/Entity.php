@@ -6,9 +6,9 @@ use Kernel\ORM\Connection\ConnectionGroup;
 
 interface Entity
 {
-    public function getTableName() : string;
+    public function getTableName(): string;
 
-    public function getPrimaryKey() : string;
+    public function getPrimaryKey(): string;
 
-    public function getConnectionGroup() : ConnectionGroup;
+    public function getConnectionGroup(): ConnectionGroup;
 }

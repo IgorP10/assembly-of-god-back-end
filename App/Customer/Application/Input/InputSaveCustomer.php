@@ -12,23 +12,26 @@ class InputSaveCustomer
     private int|null $customerId;
     private string|null $cpf;
     private string|null $name;
-    private string|null $email;
     private string|null $birthdate;
+    private string|null $email;
+    private string|null $password;
     private string|null $gender;
 
     public function __construct(
         ?int $customerId,
         ?string $cpf,
         ?string $name,
-        ?string $email,
         ?string $birthdate,
+        ?string $email,
+        ?string $password,
         ?string $gender
     ) {
         $this->customerId = $customerId;
         $this->cpf = $cpf;
         $this->name = $name;
-        $this->email = $email;
         $this->birthdate = $birthdate;
+        $this->email = $email;
+        $this->password = $password;
         $this->gender = $gender;
     }
 
@@ -38,8 +41,9 @@ class InputSaveCustomer
             $this->getCustomerId(),
             $this->cpf,
             $this->name,
-            $this->email,
             $this->birthdate,
+            $this->email,
+            $this->password,
             $this->gender
         );
     }

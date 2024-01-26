@@ -37,9 +37,9 @@ class CustomerEntity extends EntityOrchestrator implements Entity, CustomerEntit
 
         $entity->setFieldCollection('cpf', $customer->getCpf());
         $entity->setFieldCollection('name', $customer->getName());
-        $entity->setFieldCollection('email', $customer->getEmail());
         $entity->setFieldCollection('birthdate', $birthdate->format("Y-m-d"));
-        $entity->setFieldCollection('gender',  strtoupper($customer->getGender()));
+        $entity->setFieldCollection('email', $customer->getEmail());
+        $entity->setFieldCollection('password', $customer->getPassword());
         $entity->setFieldCollection('status', 1);
         $entity->setFieldCollection('created_at', (new \DateTime())->format("Y-m-d H:i:s"));
         $entity->setFieldCollection('updated_at', (new \DateTime())->format("Y-m-d H:i:s"));
@@ -50,8 +50,9 @@ class CustomerEntity extends EntityOrchestrator implements Entity, CustomerEntit
             new CustomerId($id),
             $customer->getCpf(),
             $customer->getName(),
-            $customer->getEmail(),
             $customer->getBirthdate(),
+            $customer->getEmail(),
+            $customer->getPassword(),
             $customer->getGender()
         );
     }

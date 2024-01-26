@@ -6,19 +6,13 @@ namespace App\Customer\Controller;
 
 use App\Customer\Application\CustomerApplication;
 use App\Customer\Application\Input\InputSaveCustomer;
+use Kernel\Http\Controller\AbstractController;
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-class CustomerController
+class CustomerController extends AbstractController
 {
-    private CustomerApplication $customerApplication;
-
-    public function __construct(CustomerApplication $customerApplication)
-    {
-        $this->customerApplication = $customerApplication;
-    }
-
     public function saveCustomerAction(Request $request, Response $response, array $args): Response
     {
         $body = json_decode($request->getBody()->getContents(), true);
@@ -26,21 +20,28 @@ class CustomerController
         $customerId = $body['customerId'] ?? null;
         $cpf = $body['cpf'] ?? null;
         $name = $body['name'] ?? null;
-        $email = $body['email'] ?? null;
         $birthdate = $body['birthdate'] ?? null;
+        $email = $body['email'] ?? null;
+        $password = $body['password'] ?? null;
         $gender = $body['gender'] ?? null;
 
-        $output = $this->customerApplication->saveCustomer(
+        $output = $this->getCustomerApplication()->saveCustomer(
             new InputSaveCustomer(
                 $customerId,
                 $cpf,
                 $name,
-                $email,
                 $birthdate,
+                $email,
+                $password,
                 $gender
             )
         );
 
         return new JsonResponse($output->getOutput(), 200, [],JsonResponse::DEFAULT_JSON_FLAGS);
+    }
+
+    public function getCustomerApplication(): CustomerApplication
+    {
+        return $this->getContainer()->get('context.customer.application.customerApplication');
     }
 }

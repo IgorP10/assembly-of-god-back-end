@@ -18,7 +18,7 @@ class Configuration
     /**
      * @return mixed[]
      */
-    private function createEnvironments() : array
+    private function createEnvironments(): array
     {
         if (empty(self::$ENVIRONMENTS_VARIABLES)) {
             self::$ENVIRONMENTS_VARIABLES = (array)getenv();
@@ -27,7 +27,7 @@ class Configuration
         return self::$ENVIRONMENTS_VARIABLES;
     }
 
-    private function createEnvironmentsFromFile() : array
+    private function createEnvironmentsFromFile(): array
     {
         if (empty(self::$ENVIRONMENTS_VARIABLES_FROM_FILE)) {
             $dotenv = \Dotenv\Dotenv::createImmutable(__DIR__ . '/../../', '.env');
@@ -38,7 +38,7 @@ class Configuration
         return self::$ENVIRONMENTS_VARIABLES_FROM_FILE;
     }
 
-    public function getEnvironments() : array
+    public function getEnvironments(): array
     {
         if (empty(self::$ENVIRONMENTS_ALL)) {
             self::$ENVIRONMENTS_ALL = array_merge($this->createEnvironments(), $this->createEnvironmentsFromFile());
@@ -52,7 +52,7 @@ class Configuration
      * @param mixed $value
      * @return $this
      */
-    public function set(string $key, $value) : self
+    public function set(string $key, mixed $value) : self
     {
         // Starting file if not stated
         $this->createEnvironmentsFromFile();
@@ -65,10 +65,10 @@ class Configuration
 
     /**
      * @param string $key
-     * @param mixed $value
+     * @param null $defaultValue
      * @return mixed
      */
-    public function get(string $key, $defaultValue = null)
+    public function get(string $key, $defaultValue = null): mixed
     {
         $environments = $this->getEnvironments();
 

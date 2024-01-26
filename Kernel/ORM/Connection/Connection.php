@@ -16,7 +16,7 @@ abstract class Connection
 
     use Timezone;
 
-    public function getName() : string
+    public function getName(): string
     {
         return get_class($this);
     }

@@ -9,23 +9,26 @@ class Customer implements \JsonSerializable
     private CustomerId $customerId;
     private string|null $cpf;
     private string|null $name;
-    private string|null $email;
     private string|null $birthdate;
+    private string $email;
+    private string $password;
     private string|null $gender;
 
     public function __construct(
         CustomerId $customerId,
         ?string $cpf,
         ?string $name,
-        ?string $email,
         ?string $birthdate,
+        string $email,
+        string $password,
         ?string $gender
     ) {
         $this->customerId = $customerId;
         $this->cpf = $cpf;
         $this->name = $name;
-        $this->email = $email;
         $this->birthdate = $birthdate;
+        $this->email = $email;
+        $this->password = $password;
         $this->gender = $gender;
     }
 
@@ -44,14 +47,19 @@ class Customer implements \JsonSerializable
         return $this->name;
     }
 
-    public function getEmail(): ?string
+    public function getBirthdate(): ?string
+    {
+        return $this->birthdate;
+    }
+
+    public function getEmail(): string
     {
         return $this->email;
     }
 
-    public function getBirthdate(): ?string
+    public function getPassword(): string
     {
-        return $this->birthdate;
+        return $this->password;
     }
 
     public function getGender(): ?string
@@ -65,8 +73,9 @@ class Customer implements \JsonSerializable
             'id' => $this->getCustomerId()->getId(),
             'cpf' => $this->getCpf(),
             'name' => $this->getName(),
-            'email' => $this->getEmail(),
             'birthdate' => $this->getBirthdate(),
+            'email' => $this->getEmail(),
+            'password' => $this->getPassword(),
             'gender' => $this->getGender(),
         ];
     }
