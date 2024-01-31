@@ -23,13 +23,4 @@ trait Timezone
         // Return timezone name
         return $now->getTimezone()->getName();
     }
-
-    protected function getTimezoneOld(): string
-    {
-        $brasiliaTimezone = new \DateTimeZone('America/Sao_Paulo');
-        $now = new \DateTime('now', $brasiliaTimezone);
-
-        # 3600 = 60 * 60 (seconds in 1 hour)
-        return $brasiliaTimezone->getOffset($now) / 3600; //Return -3 hours
-    }
 }
